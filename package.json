@@ -13,12 +13,16 @@
   "dependencies": {
     "axios": "^0.17.1",
     "element-ui": "^2.0.11",
+    "iview": "^2.9.0",
     "jquery": "^3.3.1",
     "moment": "^2.20.1",
     "vue": "^2.5.13",
-    "vue-router": "^3.0.1"
+    "vue-lazyload": "^1.1.4",
+    "vue-router": "^3.0.1",
+    "vuex": "^3.0.1"
   },
   "devDependencies": {
+    "babel-plugin-import": "^1.6.3",
     "css-loader": "^0.28.9",
     "file-loader": "^1.1.6",
     "html-webpack-plugin": "^2.30.1",

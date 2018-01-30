@@ -1,5 +1,5 @@
 <template>
-  <div>
+    <div>
         <div class="section">
             <div class="location">
                 <span>当前位置：</span>
@@ -21,7 +21,6 @@
                                             <span v-for="subitem in item.subcates" :key="subitem.id">
                                                 {{subitem.title}}&nbsp;
                                             </span>
-                                       
                                         </p>
                                     </h3>
                                     <div class="item-box">
@@ -31,12 +30,10 @@
                                             </dt>
                                             <dd>
                                                 <a v-for="subitem in item.subcates" :key="subitem.id" href="/goods/43.html">{{subitem.title}}</a>
-                                               
                                             </dd>
                                         </dl>
                                     </div>
                                 </li>
-                               
                             </ul>
                         </div>
                     </div>
@@ -44,16 +41,15 @@
                     <div class="left-705">
                         <div class="banner-img">
                             <div id="focus-box" class="focus-box">
-                               <el-carousel :interval="5000" arrow="always">
+                                <el-carousel :interval="5000" arrow="always">
                                     <el-carousel-item v-for="item in goodsData.sliderlist" :key="item.id">
                                         <img :src="item.img_url" alt="">
                                     </el-carousel-item>
                                 </el-carousel>
                             </div>
-
                         </div>
                     </div>
-                    <!--/右侧-->
+                    <!--/幻灯片-->
                     <div class="left-220">
                         <ul class="side-img-list">
                             <li v-for="(item,index) in goodsData.toplist" :key="item.id">
@@ -66,18 +62,17 @@
                                     <span>{{item.add_time | dateFmt}}</span>
                                 </div>
                             </li>
-                           
                         </ul>
                     </div>
                 </div>
             </div>
         </div>
-       <div class="section">
+        <div v-for="item in goodsgroupList" :key="item.level1cateid"  class="section">
             <div class="main-tit">
-                <h2>手机数码</h2>
+                <h2>{{item.catetitle}}</h2>
                 <p>
-                    <a href="/goods/43.html">手机通讯</a>
-                    <a href="/goods/43.html">摄影摄像</a>
+                    <a v-for="subitem in item.level2catelist" :key="subitem.subcateid" href="/goods/43.html">
+                    {{subitem.subcatetitle}}</a>
                     <a href="/goods/40.html">更多
                         <i>+</i>
                     </a>
@@ -86,95 +81,24 @@
             <div class="wrapper clearfix">
                 <div class="wrap-box">
                     <ul class="img-list">
-                        <li>
-                            <a href="#/site/goodsinfo/87" class="">
+                        <li v-for="subitem in item.datas" :key="subitem.artID">
+                            <router-link :to="'/site/goodsinfo/'+subitem.artID" class="">
                                 <div class="img-box">
-                                    <img src="http://39.108.135.214:8899/upload/201504/20/thumb_201504200046589514.jpg">
+                                    <!-- <img :src="subitem.img_url"> -->
+                                    <img v-lazy="subitem.img_url">
                                 </div>
                                 <div class="info">
-                                    <h3>华为（HUAWEI）荣耀6Plus 16G双4G版</h3>
+                                    <h3>{{subitem.artTitle}}</h3>
                                     <p class="price">
-                                        <b>2195</b>元</p>
+                                        <b>{{subitem.sell_price}}</b>元</p>
                                     <p>
-                                        <strong>库存 60</strong>
+                                        <strong>库存 {{subitem.stock_quantity}}</strong>
                                         <span>市场价：
-                                            <s>2499</s>
+                                            <s>{{subitem.market_price}}</s>
                                         </span>
                                     </p>
                                 </div>
-                            </a>
-                        </li>
-                        <li>
-                            <a href="#/site/goodsinfo/88" class="">
-                                <div class="img-box">
-                                    <img src="http://39.108.135.214:8899/upload/201504/20/thumb_201504200059017695.jpg">
-                                </div>
-                                <div class="info">
-                                    <h3>苹果Apple iPhone 6 Plus 16G 4G手机（联通三网版）</h3>
-                                    <p class="price">
-                                        <b>5780</b>元</p>
-                                    <p>
-                                        <strong>库存 198</strong>
-                                        <span>市场价：
-                                            <s>6388</s>
-                                        </span>
-                                    </p>
-                                </div>
-                            </a>
-                        </li>
-                        <li>
-                            <a href="#/site/goodsinfo/89" class="">
-                                <div class="img-box">
-                                    <img src="http://39.108.135.214:8899/upload/201504/20/thumb_201504200119256512.jpg">
-                                </div>
-                                <div class="info">
-                                    <h3>小米（Mi）小米Note 16G双网通版</h3>
-                                    <p class="price">
-                                        <b>2299</b>元</p>
-                                    <p>
-                                        <strong>库存 59</strong>
-                                        <span>市场价：
-                                            <s>2699</s>
-                                        </span>
-                                    </p>
-                                </div>
-                            </a>
-                        </li>
-                        <li>
-                            <a href="#/site/goodsinfo/90" class="">
-                                <div class="img-box">
-                                    <img src="http://39.108.135.214:8899/upload/201504/20/thumb_201504200154277661.jpg">
-                                </div>
-                                <div class="info">
-                                    <h3>佳能（Canon） EOS 700D 单反套机</h3>
-                                    <p class="price">
-                                        <b>4799</b>元</p>
-                                    <p>
-                                        <strong>库存 100</strong>
-                                        <span>市场价：
-                                            <s>5099</s>
-                                        </span>
-                                    </p>
-                                </div>
-                            </a>
-                        </li>
-                        <li>
-                            <a href="#/site/goodsinfo/91" class="">
-                                <div class="img-box">
-                                    <img src="http://39.108.135.214:8899/upload/201504/20/thumb_201504200214471783.jpg">
-                                </div>
-                                <div class="info">
-                                    <h3>尼康(Nikon)D3300套机（18-55mm f/3.5-5.6G VRII）（黑色）</h3>
-                                    <p class="price">
-                                        <b>3180</b>元</p>
-                                    <p>
-                                        <strong>库存 10</strong>
-                                        <span>市场价：
-                                            <s>3150</s>
-                                        </span>
-                                    </p>
-                                </div>
-                            </a>
+                            </router-link>
                         </li>
                     </ul>
                 </div>
@@ -182,7 +106,6 @@
         </div>
     </div>
 </template>
-
 
 <style>
     .el-carousel__container{
@@ -195,23 +118,33 @@
     }
 </style>
 
-
 <script>
     export default {
-        data(){
-            return{
-                goodsData:{}
+        data() {
+            return {
+                goodsData: {}, //商品分类、轮播图、推荐的数据
+                goodsgroupList:[] //商品的数组数据
             }
         },
-        created (){
+        created() {
             this.getGoodsData()
+            this.getGoodsGroupListData()
         },
-        methods:{
-            getGoodsData(){
+        methods: {
+            //获取分类、轮播图、推荐商品数据的方法
+            getGoodsData() {
                 const url = "site/goods/gettopdata/goods"
 
-                this.$axios.get(url).then(response=>{
+                this.$axios.get(url).then(response => {
                     this.goodsData = response.data.message
+                })
+            },
+            //获取商品列表数据
+            getGoodsGroupListData(){
+                const url = "site/goods/getgoodsgroup"
+
+                this.$axios.get(url).then(response=>{
+                    this.goodsgroupList = response.data.message
                 })
             }
         }
