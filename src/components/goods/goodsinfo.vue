@@ -198,6 +198,8 @@
 
 <script>
 
+    import { Affix } from 'iview';
+
     import "../../statics/site/js/jqueryplugins/jqimgzoom/js/magnifier.js"
 
 export default {
@@ -221,6 +223,9 @@ export default {
             this.getCommentData()
         }
     },
+     components: {
+            Affix: Affix
+        },
 
     created(){
         this.getGoodsData()

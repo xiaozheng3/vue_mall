@@ -21,6 +21,8 @@ Vue.use(Vuex)
 
 Vue.prototype.$axios = axios
 axios.defaults.baseURL = "http://39.108.135.214:8899/"
+axios.defaults.withCredentials = true
+
 
                  //YYYY-MM-DD HH:mm:ss
 Vue.filter('dateFmt',(input,formatString="YYYY-MM-DD")=>{
@@ -40,18 +42,56 @@ import layout from './components/layout'
 import goodslist from './components/goods/goodslist'
 import goodsinfo from './components/goods/goodsinfo'
 import shopcart from './components/shopcart/shopcart'
+import order from './components/order/order'
+import login from './components/account/login'
 
 
 const router = new VueRouter({
     routes:[
         {path:'/',redirect:'/site/goodslist'},
         {path:'/site',component:layout,children:[
-            {path:'goodslist',component:goodslist},
+            {name:'goodslist',path:'goodslist',component:goodslist},
             {path:'goodsinfo/:goodsId',component:goodsinfo},
-            {path:'shopcart',component:shopcart}
+            {path:'shopcart',component:shopcart},
+            {name:'login',path:'login',component:login},
+            {path:'order/:ids',component:order,meta:{needLogin:true}}
         ]}
     ]
 })
+
+
+
+router.beforeEach((to,from,next)=>{
+
+    if(to.path!='/site/login'){
+        localStorage.setItem('lastVisitPath',to.path)
+    }
+    if(to.meta.needLogin){
+        const url = "site/account/islogin"
+
+        axios.get(url).then(response=>{
+            if(response.data.code==='nologin'){
+                router.push({name:"login"})
+            }else{
+                next()
+            }
+        })
+    }else{
+        next()
+    }
+   
+})
+
+
+
+
+
+
+
+
+
+
+
 //全局数据储存 导入localStorgeTool中的方法
 import {addLocalGoods,getTotalCount,updateLocalGoods,deleteLocalGoodsById} from './common/localStorageTool.js'
 

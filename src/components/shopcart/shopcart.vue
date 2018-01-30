@@ -107,8 +107,8 @@
                     <!--购物车底部-->
                     <div class="cart-foot clearfix">
                         <div class="right-box">
-                            <button class="button" onclick="javascript:location.href='/index.html';">继续购物</button>
-                            <button class="submit" onclick="formSubmit(this, '/', '/shopping.html');">立即结算</button>
+                            <button class="button" @click="goBuy()" >继续购物</button>
+                            <button class="submit" @click="goToOrder()" >立即结算</button>
                         </div>
                     </div>
                     <!--购物车底部-->
@@ -208,6 +208,34 @@
                 }).catch(() => {
                    
                 });
+            },
+
+            goBuy(){
+                this.$router.push({path:'/site/goodslist'})
+
+            },
+
+            goToOrder(){
+
+
+            
+                const ids = []
+
+                this.goodsList.forEach(item=>{
+                    if(item.isSelected){
+                        ids.push(item.id)
+                    }
+                })
+
+                if(ids.length<=0){
+                       this.$message.error('请至少选择一个商品进行结算!');
+                    return
+
+                }
+
+                this.$router.push(`/site/order/${ids.join(',')}`)
+
+                    console.log(11111)
             }
         }
     }

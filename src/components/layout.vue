@@ -11,16 +11,18 @@
                         <a target="_blank" href="#"></a>
                     </div>
                     <div id="menu" class="right-box">
-                        <span style="display: none;">
-                            <a href="" class="">登录</a>
+                        <span v-show="!isLogin">
+                           <router-link to="/site/login">
+                        登录
+                           </router-link>
                             <strong>|</strong>
                             <a href="" class="">注册</a>
                             <strong>|</strong>
                         </span>
-                        <span>
+                        <span v-show="isLogin">
                             <a href="" class="">会员中心</a>
                             <strong>|</strong>
-                            <a>退出</a>
+                            <a href="javascript:;" @click="logout">退出</a>
                             <strong>|</strong>
                         </span>
                          <router-link to="/site/shopcart" id="shoppingCartCount">
@@ -129,8 +131,47 @@
     //局部导入
     // import $ from 'jquery'
 
+
+import bus from '../common/common'
+import {ISLOGIN} from '../common/common'
+
     //相当于es5的 module.exports = {}
     export default {
+
+     data(){
+         return{
+             isLogin:false
+         }
+     },
+     created(){
+
+         /*改变处理函数中的this指向
+         const _this = this
+         bus.$on(ISLOGIN,function(logined){
+             _this.isLogin = logined
+
+             方法2
+
+             bus.$on(ISLOGIN,function(logined){
+                 thisisLogin = logined
+             }.bind(this))
+         })
+         */ 
+
+        this.isLogined()
+
+        bus.$on(ISLOGIN,(logined)=>{
+            this.isLogin = logined
+        })
+
+     },
+
+
+
+
+
+
+
         mounted() {//它会在我们dom元素加载完成之后执行
             $("#menu2 li a").wrapInner('<span class="out"></span>');
             $("#menu2 li a").each(function () {
@@ -145,6 +186,45 @@
                 $(".out", this).stop().animate({ 'top': '0px' }, 300); // move up - show
                 $(".over", this).stop().animate({ 'top': '-48px' }, 300); // move up - hide
             });
+        },
+
+        methods :{
+
+            logout (){
+                this.$confirm('确认退出吗?', '提示', {
+                    confirmButtonText: '确定',
+                    cancelButtonText: '取消',
+                    type: 'warning'
+                }).then(() => {
+                    const url = "site/account/logout"
+
+                        this.$axios.get(url).then(response=>{
+                            if(response.data.status===1){
+                                this.$message.error(response.data.message)
+                                return 
+                            }
+                            this.isLogin = false
+
+                            this.$router.push({ name: 'goodslist'})
+
+                        })
+                    
+                }).catch(() => {
+
+                });
+            },
+
+            isLogined(){
+                const url = "site/account/islogin"
+
+                this.$axios.get(url).then(response=>{
+                    if(response.data.code==='logined'){
+                        this.isLogin = true
+                    }else{
+                        this.isLogin = false
+                    }
+                })
+            }
         }
     }
 </script>
