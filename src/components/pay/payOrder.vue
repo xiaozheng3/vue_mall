@@ -100,11 +100,19 @@
     export default {
         data() {
             return {
-                orderInfo: {}
+                orderInfo: {},
+              //  interval:null
+
             }
         },
         created() {
             this.getOrderInfoData()
+
+            this.getOrderStatus()
+        },
+
+        beforeDestroy(){
+         clearInterval(this.null)
         },
         mounted() {
             //文字logo
@@ -119,10 +127,10 @@
                $("#container").erweima({
                 mode: 2,
                 label: '扫码支付',
-                text: "http://www.baidu.com"
+                 text: `http://39.108.135.214:8899/site/validate/pay/alipay/${this.$route.params.orderid}`,
             });
 
-            }, 500);
+            }, 200);
         },
         methods: {
             //获取订单的详细信息
@@ -132,6 +140,20 @@
                 this.$axios.get(url).then(response => {
                     this.orderInfo = response.data.message[0]
                 })
+            },
+
+            getOrderStatus(){
+                this.interval = setInterval(()=>{
+                    const url = `site/validate/order/getorder/${this.$route.params.orderid}`
+
+                    this.$axios.get(url).then(response=>{
+                        const orderStatus = response.data.message[0].status
+
+                        if(orderStatus===2){
+                            this.$router.push({path:'/site/success'})
+                        }
+                    })
+                },3000)
             }
         }
     }

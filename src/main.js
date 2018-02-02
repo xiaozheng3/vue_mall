@@ -46,6 +46,9 @@ import shopcart from './components/shopcart/shopcart'
 import order from './components/order/order'
 import login from './components/account/login'
 import payOrder from './components/pay/payOrder'
+import pcPaySuccess from './components/pay/pcPaySuccess'
+
+ 
 
 const router = new VueRouter({
     routes:[
@@ -57,7 +60,8 @@ const router = new VueRouter({
             {name:'login',path:'login',component:login},
             //下面开始，需要进行登录验证
             {path:'order/:ids',component:order,meta:{needLogin:true}},
-            {path:'payOrder/:orderid',component:payOrder,meta:{needLogin:true}}
+            {path:'payOrder/:orderid',component:payOrder,meta:{needLogin:true}},
+            {path:'success',component:pcPaySuccess,meta:{needLogin:true}}
         ]}
     ]
 })
