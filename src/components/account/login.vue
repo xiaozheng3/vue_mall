@@ -40,6 +40,8 @@
 
     import bus from "../../common/common"
     import {ISLOGIN} from "../../common/common"
+
+    
     export default {
         methods:{
             login(){

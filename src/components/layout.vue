@@ -203,7 +203,7 @@ import {ISLOGIN} from '../common/common'
                                 this.$message.error(response.data.message)
                                 return 
                             }
-                            this.isLogin = false
+                             this.isLogin = false
 
                             this.$router.push({ name: 'goodslist'})
 
