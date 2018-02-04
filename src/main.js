@@ -47,6 +47,10 @@ import order from './components/order/order'
 import login from './components/account/login'
 import payOrder from './components/pay/payOrder'
 import pcPaySuccess from './components/pay/pcPaySuccess'
+import vipCenter from './components/vip/vipCenter'
+import myOrders from './components/vip/myOrders'
+import orderInfo from './components/vip/orderInfo'
+
 
  
 
@@ -61,7 +65,11 @@ const router = new VueRouter({
             //下面开始，需要进行登录验证
             {path:'order/:ids',component:order,meta:{needLogin:true}},
             {path:'payOrder/:orderid',component:payOrder,meta:{needLogin:true}},
-            {path:'success',component:pcPaySuccess,meta:{needLogin:true}}
+            {path:'success',component:pcPaySuccess,meta:{needLogin:true}}, {path:'vipCenter',component:vipCenter,meta:{needLogin:true}},
+            {path:'myOrders',component:myOrders,meta:{meedLogin:true}},
+            {path:'orderInfo/:orderid',component:orderInfo,meta:{needLogin:true}}
+
+
         ]}
     ]
 })
